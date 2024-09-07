@@ -5,7 +5,7 @@ use serde_json::from_str;
 
 
 #[tokio::test]
-async fn test_get_user() -> Result<(),Box<dyn std::error::Error>>{
+async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
 
     let mut pact = PactBuilder::new("consumer", "provider");
     
@@ -19,7 +19,7 @@ async fn test_get_user() -> Result<(),Box<dyn std::error::Error>>{
 
             builder.response.content_type("application/json").body(r#"{
             "id": 1,
-            "user_name": "ubhankar",
+            "user_name": "subhankar",
             "comment": "user added "
             }"#);
 

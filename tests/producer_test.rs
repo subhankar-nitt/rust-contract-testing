@@ -17,7 +17,7 @@ use serde_json::{from_str, to_string, Value};
 use pact_matching::{ match_status, match_text, CoreMatchingContext, MatchingContext};
 
 #[tokio::test]
-async fn test_provider() -> Result<(),Box<dyn std::error::Error>> {
+async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
     let  provider_url = "http://localhost:7878";
     let mut contract_file = File::open("target/pacts/consumer-provider.json")?;
     let mut contract_content = String::new();
@@ -131,82 +131,16 @@ async fn test_provider() -> Result<(),Box<dyn std::error::Error>> {
             let res_body = to_string(&json_data).unwrap();
             let expected_body = res.body.str_value().to_string();
 
-            // println!("{:?},  {:?}",res_body,expected_body);
-            // let are_equal = res_body==expected_body;
-
             let body_match = match_text(&Some(Bytes::from(res_body)), &Some(Bytes::from(expected_body)), boxed.as_ref());
 
             
             if body_match.is_err(){
                 panic!("Body Error {:?}",body_match.err());
-                // body_match.err();
             }
-
-
-            // pact_response.body=OptionalBody::from(body);
-
-            // let bytes_expected = Bytes::from(body);
-
-            // let bytest_actual = res.body.value();
-
-            // let body_match = match_text(&Some(bytes_expected), &bytest_actual, boxed.as_ref());
-
-            // let body_match = match
-            
-            // if body_match.is_err(){
-            //     println!("Body Error {:?}",body_match.err());
-            // }
-
-            // let headers = dup.headers();
-
-            // println!("{:?}",pact_response);
-
-            // println!("#####################################################################################################");
-
-            // println!("{:?}",res);
-
-            // println!("{:?}",body);
-
-
-
 
         }
         
-    }
-    // let pact:Value = from_str(&contract_content).expect("Failed to parse");
-
-    // let interactions = pact.get("interactions");
-
-    // if let Some(interactions) = interactions{
-    //     let interactions = interactions.clone();
-        
-    //     let array = interactions.as_array();
-        
-    //     if let Some(array) = array{
-    //         for ele in array{
-    //             let request = ele.get("request").expect("Interaction should have a request object");
-    //             let response = ele.get("response").expect("Interaction should have a response object");
-                
-    //             let client = Client::new();
-
-                
-
-                
-    //         }
-    //     }
-        
-    // }
-    
-    // for interaction in interactions{
-
-    //     let request = interaction.get("request").expect("Interaction should have a request object");
-
-    //     println!("{:?}",request);
-    // }
-
-
-    // print!("{:?}",interactions);
-    
+    }    
     Ok(())
     
 }
