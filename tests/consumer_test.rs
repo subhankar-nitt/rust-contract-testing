@@ -19,7 +19,7 @@ async fn test_get_user() -> Result<(),Box<dyn std::error::Error>>{
 
             builder.response.content_type("application/json").body(r#"{
             "id": 1,
-            "user_name": "subhankar",
+            "user_name": "ubhankar",
             "comment": "user added "
             }"#);
 
