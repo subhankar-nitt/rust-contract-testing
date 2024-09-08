@@ -1,1 +1,1 @@
-FROM rust:1.81-bullseye
+FROM rustlang/rust:nightly-slim
