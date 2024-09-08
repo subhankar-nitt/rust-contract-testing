@@ -14,6 +14,4 @@ reqwest = "0.12.7"
 pact_matching = "1.2.7"
 pact_models = "1.2.4"
 http = "1.1.0"
-
-# [build]
-# rustflags = ["-Z", "threads=20"]
+google-cloud-storage = "=0.20.0"

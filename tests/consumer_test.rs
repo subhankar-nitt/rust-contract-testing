@@ -2,7 +2,7 @@
 use pact_consumer::prelude::{HttpPartBuilder, PactBuilder, StartMockServer};
 use reqwest::Client;
 use serde_json::from_str;
-
+mod cloud_storage;
 
 
 #[tokio::test]
@@ -60,7 +60,8 @@ async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
     let json_string = serde_json::to_string(&resp1)?;
     let json_data: serde_json::Value = from_str(&json_string)?;
     println!("{:?}",json_data);
-
+    
+    let _ = cloud_storage::uploadFile("report.json".to_string()).await;
 
     Ok(())
 
