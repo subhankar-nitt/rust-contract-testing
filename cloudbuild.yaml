@@ -1,5 +1,5 @@
 steps:
-  - name: 'ubuntu-latest'
+  - name: 'ubuntu:latest'
     args:
       - echo "Hello world"
   #   env:
