@@ -4,6 +4,7 @@ use reqwest::Client;
 use serde_json::from_str;
 
 
+
 #[tokio::test]
 async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
 
