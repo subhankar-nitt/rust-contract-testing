@@ -1,6 +1,7 @@
 steps:
   - name: 'ubuntu:latest'
     args: ['bash', '-c', "apt-get update && apt-get install -y curl && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs"]
+    args: ['bash','-c',"rustup default nightly"]
  
     
     
