@@ -3,8 +3,8 @@ steps:
     args:
       - echo
       - "Hello World"
-  #   env:
-  #     RUSTUP_TOOLCHAIN: nightly
+    env:
+      RUSTUP_TOOLCHAIN: nightly
   #   commands:
   #   - apt-get update
   #   - apt-get install -y curl
