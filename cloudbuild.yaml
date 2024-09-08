@@ -1,6 +1,8 @@
 steps:
   - name: 'ubuntu-latest'
     image: 'ubuntu-latest'
+    commands:
+      - echo "Hello world"
   #   env:
   #     RUSTUP_TOOLCHAIN: nightly
   #   commands:
