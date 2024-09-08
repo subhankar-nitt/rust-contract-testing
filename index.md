@@ -1,6 +1,6 @@
 ---
-title: "✅ Test Result 2024-09-07 11:33 UTC"
-date: 2024-09-07T11:33:16.838339151+00:00
+title: "❌ Test Result 2024-09-08 12:04 UTC"
+date: 2024-09-08T12:04:43.814272996+00:00
 categories: test-report
 excerpt_separator: <!--more-->
 ---
@@ -8,14 +8,14 @@ excerpt_separator: <!--more-->
 
 | | Total | Passed | Failed | Ignored | Filtered | Duration |
 | --- | ----- | -------| ------ | ------- | -------- | -------- |
-| ✅ | 2 | 2 | 0 | 0 | 0 | 0s |
+| ❌ | 2 | 1 | 1 | 0 | 0 | 0s |
 
 
-**Git:** `git@github.com:subhankar-nitt/rust-contract-testing.git` @ `refs/heads/master`
+**Git:** `git@github.com:subhankar-nitt/rust-contract-testing.git` @ `refs/heads/test_id`
 
-    Commit: b56eb4fa4c013b03e16606a1beb970fb2704890b
+    Commit: fa58090842034529881c06ba17c89dc0b9d856f5
     Author: subhankar <sub.nitt@gmail.com>
-    Date: Sat, 7 Sep 2024 05:56:25 -0530
+    Date: Sun, 8 Sep 2024 05:56:25 -0530
 
         added files
 
@@ -26,7 +26,7 @@ excerpt_separator: <!--more-->
 | Name | Result | Duration |
 | ---- | ------ | -------- |
 | [contract_consumer](#contract_consumer) | ✅ | 0s | 
-| [contract_provider](#contract_provider) | ✅ | 0s | 
+| [contract_provider](#contract_provider) | ❌ | 0s | 
 
 
 # Details
@@ -35,6 +35,22 @@ excerpt_separator: <!--more-->
 
 **Duration**: 0s
 
-## ✅ contract_provider<a id="contract_provider"></a>
+## ❌ contract_provider<a id="contract_provider"></a>
 
 **Duration**: 0s
+
+<details>
+
+<summary>Test output</summary>
+
+<pre>
+thread &#x27;contract_provider&#x27; panicked at tests/idtoken/mod.rs:12:9:
+error   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: metadata
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+</pre>
+
+</details>
