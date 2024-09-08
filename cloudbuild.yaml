@@ -4,10 +4,8 @@ steps:
       - apt-get
       - update
     args:
-      - apt-get
-      - install
-      - -y
-      -  curl
+      - curl
+      - --version
     
   #   commands:
   #   - apt-get update
