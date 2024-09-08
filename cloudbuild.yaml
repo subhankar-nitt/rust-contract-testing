@@ -1,11 +1,7 @@
 steps:
   - name: 'ubuntu:latest'
-    args:
-      - apt-get
-      - update
-    args:
-      - curl
-      - --version
+    command: ['bash', '-c', 'apt-get update && apt-get install -y curl']
+    
     
   #   commands:
   #   - apt-get update
