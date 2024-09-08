@@ -1,5 +1,5 @@
 steps:
-  - name: 'ubuntu:latest'
+  - name: 'rust:1.81-slim'
     args: ['bash', '-c', "apt-get update && apt-get install -y curl && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs && cargo --version"]
  
     
