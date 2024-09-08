@@ -1,7 +1,8 @@
 steps:
   - name: 'ubuntu:latest'
     args:
-      - echo "Hello world"
+      - echo
+      - "Hello World"
   #   env:
   #     RUSTUP_TOOLCHAIN: nightly
   #   commands:
