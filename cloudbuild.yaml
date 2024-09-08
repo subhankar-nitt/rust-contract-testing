@@ -1,0 +1,17 @@
+steps:
+  - name: 'ubuntu-latest'
+    image: 'ubuntu-latest'
+    env:
+      RUSTUP_TOOLCHAIN: nightly
+    commands:
+    - apt-get update
+    - apt-get install -y curl
+    - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    - rustup component add rust-src clippy
+    - apt-get install -y build-essential
+    - apt-get install -y libssl-dev
+
+  - name: 'ubuntu-latest'
+    image: 'ubuntu-latest'
+    commands:
+      - bash generate_report.sh
