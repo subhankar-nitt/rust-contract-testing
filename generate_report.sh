@@ -13,3 +13,8 @@ git checkout test_id
 
 cd ..
 markdown-test-report -o contract-testing/index.md report.json
+
+cd contract-testing
+git add index.md
+git commit -m "commited file"
+git push origin test_id
