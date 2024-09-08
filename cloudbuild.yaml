@@ -1,6 +1,6 @@
 steps:
   - name: 'ubuntu:latest'
-    command: ['bash', '-c', 'apt-get update && apt-get install -y curl']
+    args: ['bash', '-c', 'apt-get update && apt-get install -y curl']
     
     
   #   commands:
