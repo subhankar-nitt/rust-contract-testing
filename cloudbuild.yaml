@@ -1,6 +1,5 @@
 steps:
   - name: 'ubuntu-latest'
-    image: 'ubuntu-latest'
     args:
       - echo "Hello world"
   #   env:
