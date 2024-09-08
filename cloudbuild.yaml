@@ -1,5 +1,5 @@
 steps:
-  - name: 'rustlang/rust:nightly-slim
+  - name: 'rustlang/rust:nightly-slim'
     args: ['bash', '-c', "apt-get update && apt-get install -y curl && curl --version"]
  
     
