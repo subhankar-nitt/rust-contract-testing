@@ -10,15 +10,16 @@ use pact_matching::headers::match_headers;
 use pact_models::pact::load_pact_from_json;
 
 use pact_models::prelude::MatchingRuleCategory;
+use pact_models::response;
 use reqwest::{Client, Method};
 
 use serde_json::{from_str, to_string, Value};
 
 use pact_matching::{ match_status, match_text, CoreMatchingContext, MatchingContext};
-
+mod idtoken;
 #[tokio::test]
 async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
-    let  provider_url = "http://localhost:7878";
+    let  provider_url = "https://rust-server-986655996669.us-central1.run.app";
     let mut contract_file = File::open("target/pacts/consumer-provider.json")?;
     let mut contract_content = String::new();
 
@@ -59,7 +60,10 @@ async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
 
                 builder = builder.body(body_json);
             }
-
+            if provider_url.to_string().contains(".run.app"){
+                let response = idtoken::generate_token(provider_url.to_string(), builder).await?;
+                
+            }
             let  response = builder.send().await?;
 
             // let dup = response.borrow_mut();
