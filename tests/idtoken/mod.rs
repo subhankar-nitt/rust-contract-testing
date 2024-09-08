@@ -1,7 +1,7 @@
 use std::process::Command;
 
 
-use reqwest::{Client, Method, RequestBuilder, Response};
+use reqwest::{RequestBuilder, Response};
 
 pub async fn generate_token(url:String,mut request_builder:RequestBuilder) -> Result<Response, Box<dyn std::error::Error>> {
     

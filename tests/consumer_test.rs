@@ -9,7 +9,8 @@ async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
 
     let mut pact = PactBuilder::new("consumer", "provider");
     
-    let interaction = pact.interaction("Get user by ID", "", |mut builder|{
+    
+    let interaction = pact.with_output_dir("target/pacts/users").interaction("Get user by ID", "", |mut builder|{
             builder.given("An user exists with id 1");
 
             builder.request.path("/users/1");
