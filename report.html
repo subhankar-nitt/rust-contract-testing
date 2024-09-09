@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title> Test Burst Report</title>
+        <style>
+            body{
+                font-family: Arial, Helvetica, sans-serif;
+                margin: 0;
+                padding: 20px;
+            }
+
+            h1{
+                color: #333;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .header2{
+                text-align: center;
+            }
+            .container{
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+                
+            }
+           
+            .passed{
+                color: green;
+            }
+            .failed{
+                color:red
+            }
+            .error{
+                color: orangered;
+            }
+            .skipped{
+                color: yellow;
+            }
+
+            .chart-container{
+                text-align: center;
+                margin-top: 20px;
+            }
+            .chart-title{
+                margin-bottom: 10px;
+            }
+            .canvas{
+                align-items: end;
+                background-origin: padding-box;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .left-div{
+                width: 30%;
+                background-color: #f9f9f9;
+                padding: 20px;
+                margin-right: 10px;
+            }
+            
+            .right-div{
+                width: 70%;
+                background-color: #f9f9f9;
+                padding: 20px;
+                
+            }
+            .flex-div{
+                display: flex;
+            }
+            .table-header{
+                background-color: #4CAF50;
+                color: white;
+                text-align: left;
+                padding: 10px;
+                font-weight: bold;
+            }
+
+            .table-container{
+                margin: 0 auto;
+                width: 90%;
+                background-color: #f4f4f4;
+                padding: 20px;
+                border-radius: 5px;
+            }
+
+            .table-container table{
+                border: 4px solid;
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .table-container th,.table-container td{
+                border-bottom: 1px solid #ddd;
+            }
+
+            .table-container table{
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .message-cell:hover .error-message{
+                display: block;
+            }
+
+            .error-message{
+                
+                display: none;
+                position: fixed;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+                pointer-events: none;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+            }
+            .error-message:before{
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 5px;
+                border-style: solid;
+                border-color: transparent transparent #f9f9f9 transparent;
+            }
+            .error-message pre{
+                margin: 0;
+            }
+            
+
+        </style>
+    </head>
+    <body>
+        <h1>Test Burst Report</h1>
+
+        <div class="container flex-div">
+            <div class="left-div">
+            
+                <canvas id ="testResultChart" class="canvas"></canvas>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    var ctx = document.getElementById('testResultChart').getContext('2d');
+                    var testResultChart = new Chart(ctx,{
+                        type:'doughnut',
+                        data:{
+                            labels: ['Passed','Failed'],
+                            datasets:[{
+                                data: [2,2],
+                                backgroundColor: ['#4CAF50','#F44336'],
+                                borderWidth:1
+                            }]
+                        },
+        
+                        options:{
+                            responsive: false,
+                            cutoutPercentage:50,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'bottom',
+                                },
+                            },
+                        }
+                    });
+                </script>
+            </div>
+            <div class="right-div table-container">
+                <h2 class="header2">Summary</h2>
+                <table>
+                    <thead>
+                        <tr class="table-header">
+                            
+                            <th>Total Tests</th>
+                            <th>Passed</th>
+                            <th>Failed</th>
+                            
+                            <th>Time (s)</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        
+                        <td>4</td>
+                        <td>2</td>
+                        <td>2</td>
+                        
+                        <td>0.254454775</td>
+                    </tr>
+                    <tbody>
+        
+                    </tbody>
+                </table>
+            </div>
+    
+    
+        </div>
+        <div class="container">
+    
+                
+        
+        <!-- <tr>
+            <td>user_test</td>
+            <td>2</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.108372856</td>
+        </tr>
+        <tr> -->
+            
+            
+            <td colspan="6">
+
+                <h2 class="header2">Test Class: user_test</h2>
+                <div class = "table-container">
+
+                    <table>
+                        <thread>
+                            <tr class="table-header">
+                                
+                                <th>Test Name</th>
+                                <th>Results</th>
+                                <th>Message</th>
+                                <th>Time (s)</th>
+                                
+                            </tr>
+                        </thread>
+                        <tbody>
+                            
+                            <tr class="message-cell">
+                                
+                                <td>
+                                    ✅      user_test::user_tests::contract_consumer
+                                    <span class="error-message">
+                                        <pre></pre>
+                                    </span>
+                                </td>
+                                <td>Passed</td>
+                                <td>
+                                    
+                                    
+                                </td>
+                                <td>0.072339408</td>
+                                
+                            </tr>
+                            
+                            
+                            <tr class="message-cell">
+                                
+                                <td>
+                                    ❌      user_test::user_tests::contract_provider
+                                    <span class="error-message">
+                                        <pre>thread 'user_test::user_tests::contract_provider' panicked at tests/idtoken/mod.rs:12:9:
+error   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: metadata
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</pre>
+                                    </span>
+                                </td>
+                                <td>Failed</td>
+                                <td>
+                                    assertion failed
+                                    
+                                </td>
+                                <td>0.107802014</td>
+                                
+                            </tr>
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        
+        
+        <!-- <tr>
+            <td>test</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>5.5504e-05</td>
+        </tr>
+        <tr> -->
+            
+        
+        <!-- <tr>
+            <td>unit</td>
+            <td>2</td>
+            <td>2</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.146026415</td>
+        </tr>
+        <tr> -->
+            
+            
+            <td colspan="6">
+
+                <h2 class="header2">Test Class: unit</h2>
+                <div class = "table-container">
+
+                    <table>
+                        <thread>
+                            <tr class="table-header">
+                                
+                                <th>Test Name</th>
+                                <th>Results</th>
+                                <th>Message</th>
+                                <th>Time (s)</th>
+                                
+                            </tr>
+                        </thread>
+                        <tbody>
+                            
+                            <tr class="message-cell">
+                                
+                                <td>
+                                    ✅      unit::user_tests::contract_consumer
+                                    <span class="error-message">
+                                        <pre></pre>
+                                    </span>
+                                </td>
+                                <td>Passed</td>
+                                <td>
+                                    
+                                    
+                                </td>
+                                <td>0.086230709</td>
+                                
+                            </tr>
+                            
+                            
+                            <tr class="message-cell">
+                                
+                                <td>
+                                    ❌      unit::user_tests::contract_provider
+                                    <span class="error-message">
+                                        <pre>thread 'unit::user_tests::contract_provider' panicked at tests/unit/idtoken/mod.rs:12:9:
+error   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: metadata
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</pre>
+                                    </span>
+                                </td>
+                                <td>Failed</td>
+                                <td>
+                                    assertion failed
+                                    
+                                </td>
+                                <td>0.14570703</td>
+                                
+                            </tr>
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        
+                
+    </div>
+    <script>
+        const messageCells = document.querySelectorAll('.message-cell');
+        const errorMessage = document.querySelector('.error-message');
+        const errorMessagePre = document.querySelector('pre'); 
+        messageCells.forEach(cell =>{
+            cell.addEventListener('mouseover',()=>{
+                errorMessagePre.textContent = cell.dataset.message;
+                errorMessage.style.display = 'block';
+
+                const cellREct = cell.getBoundingClientRect();
+                errorMessage.style.left = `${cellRect.left}px`;
+                errorMessage.style.top = `${cellRect.bottom}px`
+            })
+            cell.addEventListener('mouseout',()=>{
+                errorMessage.style.display = 'none';
+            });
+        });
+    </script>
+    
+    </body>
+</html>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="unit" tests="2" skipped="0" failures="1" errors="0" timestamp="2024-09-09T08:22:42" hostname="subhankar-modern14b5m" time="0.146026415"><testcase name="unit::user_tests::contract_consumer" classname="unit" time="0.086230709"/><testcase name="unit::user_tests::contract_provider" classname="unit" time="0.14570703"><failure message="assertion failed">thread &apos;unit::user_tests::contract_provider&apos; panicked at tests/unit/idtoken/mod.rs:12:9:
+error   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: metadata
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</failure></testcase>
+</testsuite>

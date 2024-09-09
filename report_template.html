@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title> Test Burst Report</title>
+        <style>
+            body{
+                font-family: Arial, Helvetica, sans-serif;
+                margin: 0;
+                padding: 20px;
+            }
+
+            h1{
+                color: #333;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .header2{
+                text-align: center;
+            }
+            .container{
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+                
+            }
+           
+            .passed{
+                color: green;
+            }
+            .failed{
+                color:red
+            }
+            .error{
+                color: orangered;
+            }
+            .skipped{
+                color: yellow;
+            }
+
+            .chart-container{
+                text-align: center;
+                margin-top: 20px;
+            }
+            .chart-title{
+                margin-bottom: 10px;
+            }
+            .canvas{
+                align-items: end;
+                background-origin: padding-box;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .left-div{
+                width: 30%;
+                background-color: #f9f9f9;
+                padding: 20px;
+                margin-right: 10px;
+            }
+            
+            .right-div{
+                width: 70%;
+                background-color: #f9f9f9;
+                padding: 20px;
+                
+            }
+            .flex-div{
+                display: flex;
+            }
+            .table-header{
+                background-color: #4CAF50;
+                color: white;
+                text-align: left;
+                padding: 10px;
+                font-weight: bold;
+            }
+
+            .table-container{
+                margin: 0 auto;
+                width: 90%;
+                background-color: #f4f4f4;
+                padding: 20px;
+                border-radius: 5px;
+            }
+
+            .table-container table{
+                border: 4px solid;
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .table-container th,.table-container td{
+                border-bottom: 1px solid #ddd;
+            }
+
+            .table-container table{
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .message-cell:hover .error-message{
+                display: block;
+            }
+
+            .error-message{
+                
+                display: none;
+                position: fixed;
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+                pointer-events: none;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+            }
+            .error-message:before{
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 5px;
+                border-style: solid;
+                border-color: transparent transparent #f9f9f9 transparent;
+            }
+            .error-message pre{
+                margin: 0;
+            }
+            
+
+        </style>
+    </head>
+    <body>
+        <h1>Test Burst Report</h1>
+
+        <div class="container flex-div">
+            <div class="left-div">
+            
+                <canvas id ="testResultChart" class="canvas"></canvas>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    var ctx = document.getElementById('testResultChart').getContext('2d');
+                    var testResultChart = new Chart(ctx,{
+                        type:'doughnut',
+                        data:{
+                            labels: ['Passed','Failed'],
+                            datasets:[{
+                                data: [{{passed_tests}},{{failed_tests}}],
+                                backgroundColor: ['#4CAF50','#F44336'],
+                                borderWidth:1
+                            }]
+                        },
+        
+                        options:{
+                            responsive: false,
+                            cutoutPercentage:50,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'bottom',
+                                },
+                            },
+                        }
+                    });
+                </script>
+            </div>
+            <div class="right-div table-container">
+                <h2 class="header2">Summary</h2>
+                <table>
+                    <thead>
+                        <tr class="table-header">
+                            
+                            <th>Total Tests</th>
+                            <th>Passed</th>
+                            <th>Failed</th>
+                            
+                            <th>Time (s)</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        
+                        <td>{{passed_tests+failed_tests}}</td>
+                        <td>{{passed_tests}}</td>
+                        <td>{{failed_tests}}</td>
+                        
+                        <td>{{time_total}}</td>
+                    </tr>
+                    <tbody>
+        
+                    </tbody>
+                </table>
+            </div>
+    
+    
+        </div>
+        <div class="container">
+    
+        {% set x = namespace(value=0) %}        
+        {% for result in test_results %}
+        <!-- <tr>
+            <td>{{result.name}}</td>
+            <td>{{result.tests}}</td>
+            <td>{{result.failures}}</td>
+            <td>{{result.errors}}</td>
+            <td>{{result.skipped}}</td>
+            <td>{{result.time}}</td>
+        </tr>
+        <tr> -->
+            {% if object_len(result.test_case) %}
+            {% set x.value=x.value+1  %}
+            <td colspan="6">
+
+                <h2 class="header2">Test Class: {{result.test_case[0].classname}}</h2>
+                <div class = "table-container">
+
+                    <table>
+                        <thread>
+                            <tr class="table-header">
+                                
+                                <th>Test Name</th>
+                                <th>Results</th>
+                                <th>Message</th>
+                                <th>Time (s)</th>
+                                
+                            </tr>
+                        </thread>
+                        <tbody>
+                            {% for testcase in result.test_case %}
+                            <tr class="message-cell">
+                                
+                                <td>
+                                    {{testcase.name}}
+                                    <span class="error-message">
+                                        <pre>{{testcase.deatiled_message}}</pre>
+                                    </span>
+                                </td>
+                                <td>{{testcase.result}}</td>
+                                <td>
+                                    {{testcase.failure_message or testcase.error_message or testcase.skipped_message}}
+                                    
+                                </td>
+                                <td>{{testcase.time}}</td>
+                                
+                            </tr>
+                            
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}        
+    </div>
+    <script>
+        const messageCells = document.querySelectorAll('.message-cell');
+        const errorMessage = document.querySelector('.error-message');
+        const errorMessagePre = document.querySelector('pre'); 
+        messageCells.forEach(cell =>{
+            cell.addEventListener('mouseover',()=>{
+                errorMessagePre.textContent = cell.dataset.message;
+                errorMessage.style.display = 'block';
+
+                const cellREct = cell.getBoundingClientRect();
+                errorMessage.style.left = `${cellRect.left}px`;
+                errorMessage.style.top = `${cellRect.bottom}px`
+            })
+            cell.addEventListener('mouseout',()=>{
+                errorMessage.style.display = 'none';
+            });
+        });
+    </script>
+    
+    </body>
+</html>

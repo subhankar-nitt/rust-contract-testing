@@ -1,7 +1,13 @@
 steps:
   - name: 'rustlang/rust:nightly-slim'
     args: ['bash', '-c', "apt-get update && apt-get install -y curl pkg-config git libssl-dev &&alias cargo='RUSTFLAGS='-Z threads=15' cargo +nightly' && ./generate_report.sh"]
- 
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'gsutil'
+      - 'cp'
+      - '-r'
+      - 'reports'
+      - 'gs://contract-testing-report/reports-junit'
     
     
   #   commands:
