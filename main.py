@@ -1,10 +1,44 @@
 import os
 import xml.etree.ElementTree as ET
 from jinja2 import Environment,FileSystemLoader
-from google.cloud import storage;
+from google.cloud import storage
+import subprocess
+
+import git
 
 env = Environment(loader=FileSystemLoader('./'))
 template = env.get_template("template/report_template.html")
+
+def clone_repo(repo_url,local_path):
+    try:
+        repo = git.Repo.clone_frome(repo_url,local_path)
+        print(f"Repository cloned successfully to {local_path}")
+    except git.exc.GitCommandError as e:
+        print(f"Error cloning repository: {e}")
+
+def pull_repo(local_path):
+    try:
+        repo = git.Repo(local_path)
+        origin = repo.remote(name='origin')
+        origin.pull()
+        print(f"Repository updated successfully at {local_path}")
+    except git.exc.GitCommandError as e:
+        print(f"Error pulling repository: {e}")
+
+def commit_and_push(local_path,message,branch_name):
+    try:
+        repo = git.Repo(local_path)
+        if branch_name not in repo.heads:
+            repo.git.checkout("-b",branch_name)
+        else:
+            repo.git.checkout(branch_name)
+        repo.git.add(all=True)
+        repo.index.commit(message)
+        origin = repo.remote(name='origin')
+        origin.push(refspec=f"refs/heads/{branch_name}")
+    except git.exc.GitCommandError as e:
+        print(f"Error pulling repository: {e}")
+
 def generate_html_report(xml_floder,output_file="contract-test-report/index.html"):
     
     passed_tests =0
