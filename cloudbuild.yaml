@@ -3,7 +3,12 @@ steps:
     args: ['bash', '-c', "apt-get update && apt-get install -y curl pkg-config git libssl-dev && alias cargo='RUSTFLAGS='-Z threads=15' cargo +nightly' && ./generate_report.sh"]
   - name: 'python:3.12-alpine3.20'
     args:
-      - './generate_html.sh'
+      - 'gcloud'
+      - 'storage'
+      - 'cp'
+      - '-r'
+      - 'reports'
+      - 'gs://contract-testing-report/reports-junit'
     
     
   #   commands:
