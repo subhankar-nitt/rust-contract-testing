@@ -84,8 +84,8 @@ mod user_tests{
             let json_data: serde_json::Value = from_str(&json_string)?;
             println!("{:?}",json_data);
 
-            let _ = cloud_storage::uploadFile("pacts/users/consumer-provider.json".to_string()).await;
-
+            let err = cloud_storage::uploadFile("pacts/users/consumer-provider.json".to_string()).await;
+            println!("{:?}",err);
             Ok(())
 
         }

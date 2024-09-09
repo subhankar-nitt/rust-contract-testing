@@ -6,7 +6,7 @@ use tokio::fs::File;
 
 pub async fn uploadFile(file_name:String) ->Result<(),Box<dyn std::error::Error>>{
 
-    let file = File::open("report.json").await?;
+    let file = File::open(file_name.clone()).await?;
     
 
     let config = ClientConfig::default().with_auth().await.unwrap();

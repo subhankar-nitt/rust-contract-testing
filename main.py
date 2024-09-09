@@ -1,6 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 from jinja2 import Environment,FileSystemLoader
+from google.cloud import storage;
 
 env = Environment(loader=FileSystemLoader('./'))
 template = env.get_template("template/report_template.html")
@@ -84,6 +85,9 @@ def generate_html_report(xml_floder,output_file="contract-test-report/index.html
 def get_len(obj):
     return len(obj)>0
 
-
+# def download_floder_from_gcs(bucket_name,source_folder,destination_floder):
+#     storage_client = storage.Client()
+#     bucket = storage_client.bucket(bucket_name)
+#     blobs = bucket.list_blobs(prefix=)
 env.globals['object_len']=get_len
 generate_html_report("reports")
