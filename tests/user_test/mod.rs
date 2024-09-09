@@ -23,15 +23,50 @@ use serde_json::{to_string, Value};
 use pact_matching::{match_status, match_text, CoreMatchingContext, MatchingContext};
 use crate::idtoken;
 
+static CONSUMER_NAME:&str = "consumer";
+static PRODUCER_NAME:&str = "producer";
+static PROVIDER_URL:&str ="https://rust-server-986655996669.us-central1.run.app";
+
+
 #[cfg(test)]
 mod user_tests{
+    use std::sync::{Arc, Mutex};
+    use lazy_static::lazy_static;
     use super::*;
     use crate::cloud_storage;
+    struct Requests<'a>{
+
+        method: &'a str,
+        path: &'a str,
+        headers: HashMap<String,String>,
+        body: &'a str,
+
+    }
+
+    struct Responses<'a>{
+
+        method: &'a str,
+        headers: HashMap<String,String>,
+        body: &'a str,
+
+    }
+
+    struct RequestResponsePair<'a>{
+        req: Requests<'a>,
+        // res: Responses<'a>,
+
+    }
+
+    // lazy_static!{
+    //     static ref req_res_pair: Mutex<RequestResponsePair> = Mutex::new(RequestResponsePair{
+    //         req: Requests{method:"ping",path:"ping",headers:HashMap::new(),body:"ping"},
+    //     });
+    // }
 
     #[tokio::test]
         pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
 
-            let mut pact = PactBuilder::new("consumer", "provider");
+            let mut pact = PactBuilder::new(CONSUMER_NAME, PRODUCER_NAME);
 
 
             let interaction = pact.with_output_dir("pacts/users").interaction("Get user_test by ID", "", |mut builder|{
@@ -40,7 +75,6 @@ mod user_tests{
                 builder.request.path("/users/1");
 
                 builder.request.method("GET");
-
 
                 builder.response.content_type("application/json").body(r#"{
                 "id": 1,
@@ -90,22 +124,16 @@ mod user_tests{
 
         }
 
-
-
-    }
-
-
-
     #[tokio::test]
     pub async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
-        let  provider_url = "https://rust-server-986655996669.us-central1.run.app";
+        let  provider_url = PROVIDER_URL;
         let mut contract_file = File::open("pacts/users/consumer-provider.json")?;
         let mut contract_content = String::new();
 
 
         contract_file.read_to_string(&mut contract_content).unwrap();
         let pact_json:Value = from_str(&contract_content).expect("Failed to parse");
-    
+
 
 
         let pact = load_pact_from_json("pacts/users/consumer-provider.json", &pact_json)?;
@@ -145,7 +173,7 @@ mod user_tests{
 
                     builder = builder.body(body_json);
                 }
-                
+
                 if provider_url.to_string().contains(".run.app"){
                     response = idtoken::generate_token(provider_url.to_string(), builder).await?;
 
@@ -200,7 +228,7 @@ mod user_tests{
                         panic!("status error {:?}",status_match.err());
                     }
                 }else{
-                    println!("request not successful");
+                    println!("Request not successful");
                 }
 
 
@@ -236,3 +264,8 @@ mod user_tests{
         Ok(())
 
     }
+
+    }
+
+
+

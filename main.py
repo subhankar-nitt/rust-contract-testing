@@ -80,6 +80,18 @@ def generate_html_report(xml_floder,output_file="contract-test-report/index.html
                 symbols="❌"
             elif testcase.find('error') is not None:
                 result ='Error'
+
+env = Environment(loader=FileSystemLoader('./'))
+template = env.get_template("template/report_template.html")
+
+def clone_repo(repo_url,local_path):
+    try:
+        repo = git.Repo.clone_frome(repo_url,local_path)
+        print(f"Repository cloned successfully to {local_path}")
+    except git.exc.GitCommandError as e:
+        print(f"Error cloning repository: {e}")
+
+def pull_repo(local_path):
                 deatiled_message = testcase.find('failure').text.strip()
                 symbols="❗⚠️"
             elif testcase.find('skipped') is not None:
