@@ -225,7 +225,7 @@ mod user_tests{
         let json_data: serde_json::Value = from_str(&json_string)?;
         println!("{:?}",json_data);
 
-        let _ = cloud_storage::uploadFile("report.json".to_string()).await;
+        let _ = cloud_storage::uploadFile("target/pacts/users/consumer-provider.json".to_string()).await;
 
         Ok(())
 
