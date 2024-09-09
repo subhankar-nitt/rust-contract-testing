@@ -3,12 +3,12 @@ import xml.etree.ElementTree as ET
 from jinja2 import Environment,FileSystemLoader
 
 env = Environment(loader=FileSystemLoader('./'))
-template = env.get_template("report_template.html")
-def generate_html_report(xml_floder,output_file="report.html"):
+template = env.get_template("template/report_template.html")
+def generate_html_report(xml_floder,output_file="contract-test-report/index.html"):
     
     passed_tests =0
     failed_tests=0
-    time_total=0;
+    time_total=0
 
     test_results = []
 
