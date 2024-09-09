@@ -44,7 +44,7 @@ mod user_tests{
 
                 builder.response.content_type("application/json").body(r#"{
                 "id": 1,
-                "user_name": "subhankar",
+                "user_name": "biswas",
                 "comment": "user_test added "
                 }"#);
 
@@ -62,7 +62,7 @@ mod user_tests{
 
                     builder.response.content_type("application/json").body(r#"{
             "id": 2,
-            "user_name": "biswas",
+            "user_name": "subhankar",
             "comment": "user_test added "
             }"#);
 

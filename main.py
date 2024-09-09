@@ -48,7 +48,7 @@ def generate_html_report(xml_floder,output_file="contract-test-report/index.html
     test_results = []
 
     for filename in os.listdir(xml_floder):
-        if filename.index(".xml") !=-1:
+        if filename.find(".xml") !=-1:
           filePath = os.path.join(xml_floder,filename)
           tree = ET.parse(filePath)
           root = tree.getroot()
