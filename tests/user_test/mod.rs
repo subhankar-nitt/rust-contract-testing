@@ -14,22 +14,92 @@ use pact_matching::headers::match_headers;
 
 use pact_models::pact::load_pact_from_json;
 
-use pact_models::prelude::MatchingRuleCategory;
 use http::response::Builder;
+use pact_models::prelude::MatchingRuleCategory;
 use reqwest::{Method, Response};
 
 use serde_json::{to_string, Value};
 
 use pact_matching::{match_status, match_text, CoreMatchingContext, MatchingContext};
+use crate::idtoken;
 
 #[cfg(test)]
 mod user_tests{
-    use crate::{cloud_storage, idtoken};
     use super::*;
+    use crate::cloud_storage;
+
+    #[tokio::test]
+        pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
+
+            let mut pact = PactBuilder::new("consumer", "provider");
+
+
+            let interaction = pact.with_output_dir("pacts/users").interaction("Get user_test by ID", "", |mut builder|{
+                builder.given("An user_test exists with id 1");
+
+                builder.request.path("/users/1");
+
+                builder.request.method("GET");
+
+
+                builder.response.content_type("application/json").body(r#"{
+                "id": 1,
+                "user_name": "subhankar",
+                "comment": "user_test added "
+                }"#);
+
+                builder
+
+
+            })
+
+                .interaction("Get user_test by ID", "", |mut builder|{
+                    builder.given("An user_test exists with id 2");
+
+                    builder.request.path("/users/2");
+
+                    builder.request.method("GET");
+
+                    builder.response.content_type("application/json").body(r#"{
+            "id": 2,
+            "user_name": "biswas",
+            "comment": "user_test added "
+            }"#);
+
+                    builder
+
+
+                })
+
+                .start_mock_server(None,None);
+
+            let url = interaction.url();
+            let response1 = Client::new().get(url.join("/users/1").unwrap()).send().await?;
+            let response2 = Client::new().get(url.join("/users/2").unwrap()).send().await?;
+
+            let resp1 = response1.text().await?;
+            let _resp2 = response2.text().await?;
+
+            let json_string = serde_json::to_string(&resp1)?;
+            let json_data: serde_json::Value = from_str(&json_string)?;
+            println!("{:?}",json_data);
+
+            let _ = cloud_storage::uploadFile("pacts/users/consumer-provider.json".to_string()).await;
+
+            Ok(())
+
+        }
+
+
+
+    }
+
+
+
     #[tokio::test]
     pub async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
         let  provider_url = "https://rust-server-986655996669.us-central1.run.app";
-        let mut contract_file = File::open("target/pacts/users/consumer-provider.json")?;
+        let mut contract_file = File::open("pacts/users/consumer-provider.json")?;
         let mut contract_content = String::new();
 
 
@@ -38,7 +108,7 @@ mod user_tests{
     
 
 
-        let pact = load_pact_from_json("target/pacts/users/consumer-provider.json", &pact_json)?;
+        let pact = load_pact_from_json("pacts/users/consumer-provider.json", &pact_json)?;
 
         for inter in pact.interactions(){
 
@@ -166,71 +236,3 @@ mod user_tests{
         Ok(())
 
     }
-
-
-
-    #[tokio::test]
-    pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
-
-        let mut pact = PactBuilder::new("consumer", "provider");
-
-
-        let interaction = pact.with_output_dir("target/pacts/users").interaction("Get user_test by ID", "", |mut builder|{
-            builder.given("An user_test exists with id 1");
-
-            builder.request.path("/users/1");
-
-            builder.request.method("GET");
-
-
-            builder.response.content_type("application/json").body(r#"{
-            "id": 1,
-            "user_name": "subhankar",
-            "comment": "user_test added "
-            }"#);
-
-            builder
-
-
-        })
-
-            .interaction("Get user_test by ID", "", |mut builder|{
-                builder.given("An user_test exists with id 2");
-
-                builder.request.path("/users/2");
-
-                builder.request.method("GET");
-
-                builder.response.content_type("application/json").body(r#"{
-        "id": 2,
-        "user_name": "biswas",
-        "comment": "user_test added "
-        }"#);
-
-                builder
-
-
-            })
-
-            .start_mock_server(None,None);
-
-        let url = interaction.url();
-        let response1 = Client::new().get(url.join("/users/1").unwrap()).send().await?;
-        let response2 = Client::new().get(url.join("/users/2").unwrap()).send().await?;
-
-        let resp1 = response1.text().await?;
-        let _resp2 = response2.text().await?;
-
-        let json_string = serde_json::to_string(&resp1)?;
-        let json_data: serde_json::Value = from_str(&json_string)?;
-        println!("{:?}",json_data);
-
-        let _ = cloud_storage::uploadFile("target/pacts/users/consumer-provider.json".to_string()).await;
-
-        Ok(())
-
-    }
-
-
-
-}

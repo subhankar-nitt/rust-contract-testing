@@ -7,7 +7,7 @@ steps:
       - 'cp'
       - '-r'
       - 'reports'
-      - 'gs://contract-testing-report/reports-junit'
+      - 'gs://contract-testing-report/reports-junit/'
     
     
   #   commands:
