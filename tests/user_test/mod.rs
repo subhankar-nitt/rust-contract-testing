@@ -61,9 +61,10 @@ mod user_tests{
     }
 
     lazy_static!{
+        
         static ref req_res_pair: Mutex<RequestResponsePair<'static>> = Mutex::new(RequestResponsePair{
             req: Requests{method:"ping",path:"ping",headers:HashMap::new(),body:"ping"},
-            res: Responses{status_code: StatusCode(NonZeroU16::from_str("200").unwrap()),headers:HashMap::new(),body:"ping"}
+            res: Responses{status_code: StatusCode::from_str("200").unwrap(),headers:HashMap::new(),body:"ping"}
         });
     }
 
