@@ -30,8 +30,11 @@ static PROVIDER_URL:&str ="https://rust-server-986655996669.us-central1.run.app"
 
 #[cfg(test)]
 mod user_tests{
+    use std::num::NonZeroU16;
     use std::sync::{Arc, Mutex};
+    use http::StatusCode;
     use lazy_static::lazy_static;
+    
     use super::*;
     use crate::cloud_storage;
     struct Requests<'a>{
@@ -45,7 +48,7 @@ mod user_tests{
 
     struct Responses<'a>{
 
-        method: &'a str,
+        status_code: StatusCode,
         headers: HashMap<String,String>,
         body: &'a str,
 
@@ -53,14 +56,14 @@ mod user_tests{
 
     struct RequestResponsePair<'a>{
         req: Requests<'a>,
-        // res: Responses<'a>,
+        res: Responses<'a>,
 
     }
 
     lazy_static!{
         static ref req_res_pair: Mutex<RequestResponsePair<'static>> = Mutex::new(RequestResponsePair{
             req: Requests{method:"ping",path:"ping",headers:HashMap::new(),body:"ping"},
-            // res: Responses{}
+            res: Responses{status_code: StatusCode(NonZeroU16::from_str("200").unwrap()),headers:HashMap::new(),body:"ping"}
         });
     }
 
@@ -80,7 +83,7 @@ mod user_tests{
                 builder.response.content_type("application/json").body(r#"{
                 "id": 1,
                 "user_name": "subhankar",
-                "comment": "unit added "
+                "comment": "user added "
                 }"#);
 
                 builder
@@ -98,7 +101,7 @@ mod user_tests{
                     builder.response.content_type("application/json").body(r#"{
             "id": 2,
             "user_name": "biswas",
-            "comment": "unit added "
+            "comment": "user added "
             }"#);
 
                     builder
