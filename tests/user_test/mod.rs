@@ -4,6 +4,7 @@ use reqwest::Client;
 use serde_json::{from_str, Map};
 
 use std::collections::HashMap;
+use std::fmt::format;
 use std::panic;
 use std::str::FromStr;
 use std::{fs::File, io::Read};
@@ -60,16 +61,21 @@ struct RequestResponsePair{
 struct BasicData{
     consumer: String,
     producer: String,
-    url:String
+    url:String,
+    test_name:String,
+    save_file:String,
+    data_directory:String
 }
 
 impl BasicData {
-    fn assign_value(&mut self, consumer:&str, provider:&str, url:&str) -> &BasicData {
+    fn assign_value(&mut self, consumer:&str, provider:&str, url:&str, test_name:&str,save_file:String,data_directory:String) -> &BasicData {
         self.producer= provider.to_string();
         self.consumer= consumer.to_string();
         self.url = url.to_string();
-
-        (self)
+        self.test_name = test_name.to_string();
+        self.save_file = save_file;
+        self.data_directory = data_directory;
+        self
     }
 
     fn get_consumer(&self)->&str{
@@ -81,6 +87,15 @@ impl BasicData {
     }
     fn get_url(&self)->&str{
         &self.url.as_str()
+    }
+
+    fn get_save_file(&self) ->&str{
+
+        &self.save_file.as_str()
+    }
+    fn get_data_directory(&self) ->&str{
+
+        &self.data_directory.as_str()
     }
 }
 
@@ -101,16 +116,21 @@ impl RequestResponsePair {
 lazy_static!{
     static ref REQ_RES_LIST: Mutex<Vec<RequestResponsePair>> = Mutex::new(Vec::new());
     static ref PATHS: Mutex<Vec<String>> = Mutex::new(Vec::new());
-    static ref BASIC_DATA: Mutex<BasicData> = Mutex::new(BasicData{consumer:String::new(),producer:String::new(),url:String::new()});
+    static ref BASIC_DATA: Mutex<BasicData> = Mutex::new(BasicData{consumer:String::new(),producer:String::new(),url:String::new(),test_name:String::new(),save_file:String::new(),data_directory:String::new()});
 }
 
 
-pub async fn push_data(data_list: Vec<&str>,consumer:&str,producer:&str,provider_url:&str) ->Result<(), Box<dyn std::error::Error>>{
+pub async fn push_data(data_list: Vec<&str>,consumer:&str,producer:&str,provider_url:&str,test_name:&str) ->Result<(), Box<dyn std::error::Error>>{
     let mut vec = REQ_RES_LIST.lock().unwrap();
     let mut paths = PATHS.lock().unwrap();
     let mut basic_data = BASIC_DATA.lock().unwrap();
 
-    basic_data.assign_value(consumer, producer, provider_url);
+    let file_name = format!("{}-{}.json",consumer,producer);
+    let directory = format!("{}_test",test_name);
+
+    let save_file = format!("{}/{}",directory,file_name);
+
+    basic_data.assign_value(consumer, producer, provider_url,test_name,save_file,directory);
 
     for item in data_list{
         let data: Value = from_str(item).unwrap();
@@ -159,7 +179,7 @@ pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
     let mut pact = PactBuilder::new(basic_data.get_consumer(), basic_data.get_provider());
 
 
-     let mut pact = pact.with_output_dir("pacts/users");
+     let mut pact = pact.with_output_dir(format!("pacts/{}",basic_data.get_data_directory()));
 
     for interaction in vec.iter() {
         let provider_state = interaction.get_provider_state();
@@ -261,7 +281,7 @@ pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
 pub async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
     let basic_data = BASIC_DATA.lock().unwrap();
     let  provider_url = basic_data.get_url();
-    let mut contract_file = File::open("pacts/users/consumer-producer.json")?;
+    let mut contract_file = File::open(format!("pacts/{}",basic_data.get_save_file()))?;
     let mut contract_content = String::new();
 
 
@@ -270,7 +290,7 @@ pub async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
 
 
 
-    let pact = load_pact_from_json("pacts/users/consumer-producer.json", &pact_json)?;
+    let pact = load_pact_from_json(format!("pacts/{}",basic_data.get_save_file()).as_str(), &pact_json)?;
 
     for inter in pact.interactions(){
 

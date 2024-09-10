@@ -1,3 +1,5 @@
+use std::fmt::format;
+
 
 mod user_test;
 mod cloud_storage;
@@ -9,6 +11,7 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
     let consumer_name:&str = "consumer";
     let producer_name:&str = "producer";
     let provider_url:&str ="https://rust-server-986655996669.us-central1.run.app";
+    let test_name:&str = "user";
     
     user_test::push_data( vec![r#"
     {
@@ -38,15 +41,16 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
          }"#
 
 
-    ],consumer_name,producer_name,provider_url)
+    ],consumer_name,producer_name,provider_url,test_name)
         .await.expect("calling init function ");
-    user_test::contract_consumer().await.expect("Consumer failed");
-    // let err = cloud_storage::uploadFile("pacts/users/consumer-producer.json".to_string()).await;
-    // if err.is_err(){
 
-    //     println!("Error Saving file :{:?}",err);
-    // }
-    // user_test::contract_provider().await.expect("Provider failed");
+    user_test::contract_consumer().await.expect("Consumer failed");
+    let err = cloud_storage::uploadFile(format!("pacts/{}_test/{}-{}.json",test_name,consumer_name,producer_name)).await;
+    if err.is_err(){
+
+        println!("Error Saving file :{:?}",err);
+    }
+    user_test::contract_provider().await.expect("Provider failed");
 
     
     Ok(())
