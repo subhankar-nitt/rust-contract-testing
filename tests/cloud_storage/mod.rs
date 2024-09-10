@@ -18,7 +18,7 @@ pub async fn uploadFile(file_name:String) ->Result<(),Box<dyn std::error::Error>
         ..Default::default()
     }, file, &upload_type).await?;
 
-    println!("{:?}",uploaded);
+    // println!("{:?}",uploaded);
 
     Ok(())
 }

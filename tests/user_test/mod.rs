@@ -155,7 +155,7 @@ pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
 
     let basic_data = BASIC_DATA.lock().unwrap();
     let vec = REQ_RES_LIST.lock().unwrap();
-    println!("{:?}",basic_data.get_consumer());
+    // println!("{:?}",basic_data.get_consumer());
     let mut pact = PactBuilder::new(basic_data.get_consumer(), basic_data.get_provider());
 
 
@@ -183,7 +183,7 @@ pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
             }
 
             for (key,value) in res.headers.iter(){
-                builder.response.header(key,value.to_string());
+                builder.response.header(key,value.as_str().unwrap());
             }
             builder.response.json_body(res.body.clone());
             builder.response.status(res.status_code.as_u16());
