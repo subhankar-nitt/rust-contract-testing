@@ -1,54 +1,19 @@
 import os
 import xml.etree.ElementTree as ET
 from jinja2 import Environment,FileSystemLoader
-from google.cloud import storage
-import subprocess
-
-import git
 
 env = Environment(loader=FileSystemLoader('./'))
 template = env.get_template("template/report_template.html")
-
-def clone_repo(repo_url,local_path):
-    try:
-        repo = git.Repo.clone_frome(repo_url,local_path)
-        print(f"Repository cloned successfully to {local_path}")
-    except git.exc.GitCommandError as e:
-        print(f"Error cloning repository: {e}")
-
-def pull_repo(local_path):
-    try:
-        repo = git.Repo(local_path)
-        origin = repo.remote(name='origin')
-        origin.pull()
-        print(f"Repository updated successfully at {local_path}")
-    except git.exc.GitCommandError as e:
-        print(f"Error pulling repository: {e}")
-
-def commit_and_push(local_path,message,branch_name):
-    try:
-        repo = git.Repo(local_path)
-        if branch_name not in repo.heads:
-            repo.git.checkout("-b",branch_name)
-        else:
-            repo.git.checkout(branch_name)
-        repo.git.add(all=True)
-        repo.index.commit(message)
-        origin = repo.remote(name='origin')
-        origin.push(refspec=f"refs/heads/{branch_name}")
-    except git.exc.GitCommandError as e:
-        print(f"Error pulling repository: {e}")
-
-def generate_html_report(xml_floder,output_file="contract-test-report/index.html"):
+def generate_html_report(xml_floder,output_file="report.html"):
     
     passed_tests =0
     failed_tests=0
-    time_total=0
+    time_total=0;
 
     test_results = []
 
     for filename in os.listdir(xml_floder):
-        if filename.find(".xml") !=-1:
+        if filename.index(".xml") !=-1:
           filePath = os.path.join(xml_floder,filename)
           tree = ET.parse(filePath)
           root = tree.getroot()
@@ -80,18 +45,6 @@ def generate_html_report(xml_floder,output_file="contract-test-report/index.html
                 symbols="❌"
             elif testcase.find('error') is not None:
                 result ='Error'
-
-env = Environment(loader=FileSystemLoader('./'))
-template = env.get_template("template/report_template.html")
-
-def clone_repo(repo_url,local_path):
-    try:
-        repo = git.Repo.clone_frome(repo_url,local_path)
-        print(f"Repository cloned successfully to {local_path}")
-    except git.exc.GitCommandError as e:
-        print(f"Error cloning repository: {e}")
-
-def pull_repo(local_path):
                 deatiled_message = testcase.find('failure').text.strip()
                 symbols="❗⚠️"
             elif testcase.find('skipped') is not None:
@@ -131,9 +84,6 @@ def pull_repo(local_path):
 def get_len(obj):
     return len(obj)>0
 
-# def download_floder_from_gcs(bucket_name,source_folder,destination_floder):
-#     storage_client = storage.Client()
-#     bucket = storage_client.bucket(bucket_name)
-#     blobs = bucket.list_blobs(prefix=)
+
 env.globals['object_len']=get_len
 generate_html_report("reports")

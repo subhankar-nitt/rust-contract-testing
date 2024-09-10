@@ -151,7 +151,7 @@
                         data:{
                             labels: ['Passed','Failed'],
                             datasets:[{
-                                data: [{{passed_tests}},{{failed_tests}}],
+                                data: [1,1],
                                 backgroundColor: ['#4CAF50','#F44336'],
                                 borderWidth:1
                             }]
@@ -185,11 +185,11 @@
                     </thead>
                     <tr>
                         
-                        <td>{{passed_tests+failed_tests}}</td>
-                        <td>{{passed_tests}}</td>
-                        <td>{{failed_tests}}</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>1</td>
                         
-                        <td>{{time_total}}</td>
+                        <td>0.577075057</td>
                     </tr>
                     <tbody>
         
@@ -201,22 +201,22 @@
         </div>
         <div class="container">
     
-        {% set x = namespace(value=0) %}        
-        {% for result in test_results %}
+                
+        
         <!-- <tr>
-            <td>{{result.name}}</td>
-            <td>{{result.tests}}</td>
-            <td>{{result.failures}}</td>
-            <td>{{result.errors}}</td>
-            <td>{{result.skipped}}</td>
-            <td>{{result.time}}</td>
+            <td>user_test</td>
+            <td>2</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.577075057</td>
         </tr>
         <tr> -->
-            {% if object_len(result.test_case) %}
-            {% set x.value=x.value+1  %}
+            
+            
             <td colspan="6">
 
-                <h2 class="header2">Test Class: {{result.test_case[0].classname}}</h2>
+                <h2 class="header2">Test Class: user_test</h2>
                 <div class = "table-container">
 
                     <table>
@@ -231,32 +231,53 @@
                             </tr>
                         </thread>
                         <tbody>
-                            {% for testcase in result.test_case %}
+                            
                             <tr class="message-cell">
                                 
                                 <td>
-                                    {{testcase.name}}
+                                    ❌      user_test::user_tests::contract_provider
                                     <span class="error-message">
-                                        <pre>{{testcase.deatiled_message}}</pre>
+                                        <pre>"200"
+thread 'user_test::user_tests::contract_provider' panicked at tests/user_test/mod.rs:258:21:
+Body Error Some([BodyMismatch { path: "$", expected: Some(b"{\"comment\":\"user added \",\"id\":1,\"user_name\":\"subhankar\"}"), actual: Some(b"{\"comment\":\"unit added \",\"id\":1,\"user_name\":\"subhankar\"}"), mismatch: "Expected body '{\"comment\":\"user added \",\"id\":1,\"user_name\":\"subhankar\"}' to match '{\"comment\":\"unit added \",\"id\":1,\"user_name\":\"subhankar\"}' using equality but did not match" }])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</pre>
                                     </span>
                                 </td>
-                                <td class ="status">{{testcase.result}}</td>
+                                <td class ="status">Failed</td>
                                 <td>
-                                    {{testcase.failure_message or testcase.error_message or testcase.skipped_message}}
+                                    assertion failed
                                     
                                 </td>
-                                <td>{{testcase.time}}</td>
+                                <td>0.229228734</td>
                                 
                             </tr>
                             
-                            {% endfor %}
+                            
+                            <tr class="message-cell">
+                                
+                                <td>
+                                    ✅      user_test::user_tests::contract_consumer
+                                    <span class="error-message">
+                                        <pre></pre>
+                                    </span>
+                                </td>
+                                <td class ="status">Passed</td>
+                                <td>
+                                    
+                                    
+                                </td>
+                                <td>0.575486031</td>
+                                
+                            </tr>
+                            
+                            
                         </tbody>
                     </table>
                 </div>
             </td>
         </tr>
-        {% endif %}
-        {% endfor %}        
+        
+                
     </div>
     <script>
         const messageCells = document.querySelectorAll('.message-cell');

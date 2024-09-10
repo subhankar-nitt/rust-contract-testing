@@ -57,11 +57,12 @@ mod user_tests{
 
     }
 
-    // lazy_static!{
-    //     static ref req_res_pair: Mutex<RequestResponsePair> = Mutex::new(RequestResponsePair{
-    //         req: Requests{method:"ping",path:"ping",headers:HashMap::new(),body:"ping"},
-    //     });
-    // }
+    lazy_static!{
+        static ref req_res_pair: Mutex<RequestResponsePair<'static>> = Mutex::new(RequestResponsePair{
+            req: Requests{method:"ping",path:"ping",headers:HashMap::new(),body:"ping"},
+            // res: Responses{}
+        });
+    }
 
     #[tokio::test]
         pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
@@ -70,7 +71,7 @@ mod user_tests{
 
 
             let interaction = pact.with_output_dir("pacts/users").interaction("Get user_test by ID", "", |mut builder|{
-                builder.given("An user_test exists with id 1");
+                builder.given("An unit exists with id 1");
 
                 builder.request.path("/users/1");
 
@@ -78,8 +79,8 @@ mod user_tests{
 
                 builder.response.content_type("application/json").body(r#"{
                 "id": 1,
-                "user_name": "biswas",
-                "comment": "user_test added "
+                "user_name": "subhankar",
+                "comment": "unit added "
                 }"#);
 
                 builder
@@ -88,7 +89,7 @@ mod user_tests{
             })
 
                 .interaction("Get user_test by ID", "", |mut builder|{
-                    builder.given("An user_test exists with id 2");
+                    builder.given("An unit exists with id 2");
 
                     builder.request.path("/users/2");
 
@@ -96,8 +97,8 @@ mod user_tests{
 
                     builder.response.content_type("application/json").body(r#"{
             "id": 2,
-            "user_name": "subhankar",
-            "comment": "user_test added "
+            "user_name": "biswas",
+            "comment": "unit added "
             }"#);
 
                     builder
