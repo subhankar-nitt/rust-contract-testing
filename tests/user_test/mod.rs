@@ -28,112 +28,112 @@ static PRODUCER_NAME:&str = "producer";
 static PROVIDER_URL:&str ="https://rust-server-986655996669.us-central1.run.app";
 
 
-#[cfg(test)]
-mod user_tests{
-    use std::num::NonZeroU16;
-    use std::sync::{Arc, Mutex};
-    use http::StatusCode;
-    use lazy_static::lazy_static;
-    
-    use super::*;
-    use crate::cloud_storage;
-    struct Requests<'a>{
 
-        method: &'a str,
-        path: &'a str,
-        headers: HashMap<String,String>,
-        body: &'a str,
+use std::sync::{ Mutex};
+use http::StatusCode;
+use lazy_static::lazy_static;
+use serial_test::serial;
 
-    }
+use super::*;
+use crate::cloud_storage;
+struct Requests<'a>{
 
-    struct Responses<'a>{
+    method: &'a str,
+    path: &'a str,
+    headers: HashMap<String,String>,
+    body: &'a str,
 
-        status_code: StatusCode,
-        headers: HashMap<String,String>,
-        body: &'a str,
+}
 
-    }
+struct Responses<'a>{
 
-    struct RequestResponsePair<'a>{
-        req: Requests<'a>,
-        res: Responses<'a>,
+    status_code: StatusCode,
+    headers: HashMap<String,String>,
+    body: &'a str,
 
-    }
+}
 
-    // struct DataStore{
-    //     data: Mutex<Vec<RequestResponsePair<'_>>>
-    // }
+struct RequestResponsePair<'a>{
+    req: Requests<'a>,
+    res: Responses<'a>,
 
-    lazy_static!{
-        
-        static ref req_res_pair: Mutex<RequestResponsePair<'static>> = Mutex::new(RequestResponsePair{
-            req: Requests{method:"ping",path:"ping",headers:HashMap::new(),body:"ping"},
-            res: Responses{status_code: StatusCode::from_str("200").unwrap(),headers:HashMap::new(),body:"ping"},
-        });
-    }
+}
 
-    #[tokio::test]
-        pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
+// struct DataStore{
+//     data: Mutex<Vec<RequestResponsePair<'_>>>
+// }
 
-            let mut pact = PactBuilder::new(CONSUMER_NAME, PRODUCER_NAME);
+lazy_static!{
+
+    static ref req_res_pair: Mutex<RequestResponsePair<'static>> = Mutex::new(RequestResponsePair{
+        req: Requests{method:"ping",path:"ping",headers:HashMap::new(),body:"ping"},
+        res: Responses{status_code: StatusCode::from_str("200").unwrap(),headers:HashMap::new(),body:"ping"},
+    });
+}
 
 
-            let interaction = pact.with_output_dir("pacts/users").interaction("Get user_test by ID", "", |mut builder|{
-                builder.given("An unit exists with id 1");
 
-                builder.request.path("/users/1");
+    pub async fn contract_consumer() -> Result<(),Box<dyn std::error::Error>>{
+
+        let mut pact = PactBuilder::new(CONSUMER_NAME, PRODUCER_NAME);
+
+
+        let interaction = pact.with_output_dir("pacts/users").interaction("Get user_test by ID", "", |mut builder|{
+            builder.given("An unit exists with id 1");
+
+            builder.request.path("/users/1");
+
+            builder.request.method("GET");
+
+            builder.response.content_type("application/json").body(r#"{
+            "id": 1,
+            "user_name": "subhankar",
+            "comment": "user added "
+            }"#);
+
+            builder
+
+
+        })
+
+            .interaction("Get user_test by ID", "", |mut builder|{
+                builder.given("An unit exists with id 2");
+
+                builder.request.path("/users/2");
 
                 builder.request.method("GET");
 
                 builder.response.content_type("application/json").body(r#"{
-                "id": 1,
-                "user_name": "subhankar",
-                "comment": "user added "
-                }"#);
+        "id": 2,
+        "user_name": "biswas",
+        "comment": "user added "
+        }"#);
 
                 builder
 
 
             })
 
-                .interaction("Get user_test by ID", "", |mut builder|{
-                    builder.given("An unit exists with id 2");
+            .start_mock_server(None,None);
 
-                    builder.request.path("/users/2");
+        let url = interaction.url();
+        let response1 = Client::new().get(url.join("/users/1").unwrap()).send().await?;
+        let response2 = Client::new().get(url.join("/users/2").unwrap()).send().await?;
 
-                    builder.request.method("GET");
+        let resp1 = response1.text().await?;
+        let _resp2 = response2.text().await?;
 
-                    builder.response.content_type("application/json").body(r#"{
-            "id": 2,
-            "user_name": "biswas",
-            "comment": "user added "
-            }"#);
+        let json_string = serde_json::to_string(&resp1)?;
+        let json_data: serde_json::Value = from_str(&json_string)?;
+        println!("{:?}",json_data);
 
-                    builder
+        let err = cloud_storage::uploadFile("pacts/users/consumer-producer.json".to_string()).await;
+        println!("{:?}",err);
+        Ok(())
+
+    }
 
 
-                })
-
-                .start_mock_server(None,None);
-
-            let url = interaction.url();
-            let response1 = Client::new().get(url.join("/users/1").unwrap()).send().await?;
-            let response2 = Client::new().get(url.join("/users/2").unwrap()).send().await?;
-
-            let resp1 = response1.text().await?;
-            let _resp2 = response2.text().await?;
-
-            let json_string = serde_json::to_string(&resp1)?;
-            let json_data: serde_json::Value = from_str(&json_string)?;
-            println!("{:?}",json_data);
-
-            let err = cloud_storage::uploadFile("pacts/users/consumer-producer.json".to_string()).await;
-            println!("{:?}",err);
-            Ok(())
-
-        }
-
-    #[tokio::test]
     pub async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
         let  provider_url = PROVIDER_URL;
         let mut contract_file = File::open("pacts/users/consumer-producer.json")?;
@@ -271,8 +271,6 @@ mod user_tests{
 
         }
         Ok(())
-
-    }
 
     }
 
