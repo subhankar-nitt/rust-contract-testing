@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="user_test" tests="2" skipped="0" failures="1" errors="0" timestamp="2024-09-10T03:49:37" hostname="541a370fbbf1" time="0.577075057"><testcase name="user_test::user_tests::contract_provider" classname="user_test" time="0.229228734"><failure message="assertion failed">&quot;200&quot;
-thread &apos;user_test::user_tests::contract_provider&apos; panicked at tests/user_test/mod.rs:258:21:
-Body Error Some([BodyMismatch { path: &quot;$&quot;, expected: Some(b&quot;{\&quot;comment\&quot;:\&quot;user added \&quot;,\&quot;id\&quot;:1,\&quot;user_name\&quot;:\&quot;subhankar\&quot;}&quot;), actual: Some(b&quot;{\&quot;comment\&quot;:\&quot;unit added \&quot;,\&quot;id\&quot;:1,\&quot;user_name\&quot;:\&quot;subhankar\&quot;}&quot;), mismatch: &quot;Expected body &apos;{\&quot;comment\&quot;:\&quot;user added \&quot;,\&quot;id\&quot;:1,\&quot;user_name\&quot;:\&quot;subhankar\&quot;}&apos; to match &apos;{\&quot;comment\&quot;:\&quot;unit added \&quot;,\&quot;id\&quot;:1,\&quot;user_name\&quot;:\&quot;subhankar\&quot;}&apos; using equality but did not match&quot; }])
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-</failure></testcase><testcase name="user_test::user_tests::contract_consumer" classname="user_test" time="0.575486031"/>
-</testsuite>

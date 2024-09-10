@@ -127,7 +127,7 @@ mod user_tests{
             let json_data: serde_json::Value = from_str(&json_string)?;
             println!("{:?}",json_data);
 
-            let err = cloud_storage::uploadFile("pacts/users/consumer-provider.json".to_string()).await;
+            let err = cloud_storage::uploadFile("pacts/users/consumer-producer.json".to_string()).await;
             println!("{:?}",err);
             Ok(())
 
@@ -136,7 +136,7 @@ mod user_tests{
     #[tokio::test]
     pub async fn contract_provider() -> Result<(),Box<dyn std::error::Error>> {
         let  provider_url = PROVIDER_URL;
-        let mut contract_file = File::open("pacts/users/consumer-provider.json")?;
+        let mut contract_file = File::open("pacts/users/consumer-producer.json")?;
         let mut contract_content = String::new();
 
 
@@ -145,7 +145,7 @@ mod user_tests{
 
 
 
-        let pact = load_pact_from_json("pacts/users/consumer-provider.json", &pact_json)?;
+        let pact = load_pact_from_json("pacts/users/consumer-producer.json", &pact_json)?;
 
         for inter in pact.interactions(){
 
