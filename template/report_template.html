@@ -133,6 +133,11 @@
                 margin: 0;
             }
             
+            a img{
+                width: 50px;
+                height: 50px;
+                border: none;
+            }
 
         </style>
     </head>
@@ -227,6 +232,7 @@
                                 <th>Results</th>
                                 <th>Message</th>
                                 <th>Time (s)</th>
+                                <th>Download Contract</th>
                                 
                             </tr>
                         </thread>
@@ -246,6 +252,11 @@
                                     
                                 </td>
                                 <td>{{testcase.time}}</td>
+                                <td>
+                                    <a href={{result.report_dir}} download="contract.json">
+                                        <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/download-icon-10008164-8108583.png?f=webp&w=256" alt="Download">
+                                    </a>
+                                </td>
                                 
                             </tr>
                             

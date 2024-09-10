@@ -133,6 +133,11 @@
                 margin: 0;
             }
             
+            a img{
+                width: 50px;
+                height: 50px;
+                border: none;
+            }
 
         </style>
     </head>
@@ -151,7 +156,7 @@
                         data:{
                             labels: ['Passed','Failed'],
                             datasets:[{
-                                data: [1,1],
+                                data: [0,1],
                                 backgroundColor: ['#4CAF50','#F44336'],
                                 borderWidth:1
                             }]
@@ -185,11 +190,11 @@
                     </thead>
                     <tr>
                         
-                        <td>2</td>
                         <td>1</td>
+                        <td>0</td>
                         <td>1</td>
                         
-                        <td>0.577075057</td>
+                        <td>3.14535944</td>
                     </tr>
                     <tbody>
         
@@ -204,12 +209,23 @@
                 
         
         <!-- <tr>
-            <td>user_test</td>
-            <td>2</td>
+            <td>test</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>7.3125e-05</td>
+        </tr>
+        <tr> -->
+            
+        
+        <!-- <tr>
+            <td>test</td>
+            <td>1</td>
             <td>1</td>
             <td>0</td>
             <td>0</td>
-            <td>0.577075057</td>
+            <td>3.145286315</td>
         </tr>
         <tr> -->
             
@@ -227,6 +243,7 @@
                                 <th>Results</th>
                                 <th>Message</th>
                                 <th>Time (s)</th>
+                                <th>Download Contract</th>
                                 
                             </tr>
                         </thread>
@@ -235,11 +252,10 @@
                             <tr class="message-cell">
                                 
                                 <td>
-                                    ❌      user_test::user_tests::contract_provider
+                                    ❌      user_test
                                     <span class="error-message">
-                                        <pre>"200"
-thread 'user_test::user_tests::contract_provider' panicked at tests/user_test/mod.rs:258:21:
-Body Error Some([BodyMismatch { path: "$", expected: Some(b"{\"comment\":\"user added \",\"id\":1,\"user_name\":\"subhankar\"}"), actual: Some(b"{\"comment\":\"unit added \",\"id\":1,\"user_name\":\"subhankar\"}"), mismatch: "Expected body '{\"comment\":\"user added \",\"id\":1,\"user_name\":\"subhankar\"}' to match '{\"comment\":\"unit added \",\"id\":1,\"user_name\":\"subhankar\"}' using equality but did not match" }])
+                                        <pre>thread 'user_test' panicked at tests/cloud_storage/mod.rs:12:60:
+called `Result::unwrap()` on an `Err` value: CredentialsIOError(Os { code: 2, kind: NotFound, message: "No such file or directory" })
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</pre>
                                     </span>
                                 </td>
@@ -248,25 +264,12 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</p
                                     assertion failed
                                     
                                 </td>
-                                <td>0.229228734</td>
-                                
-                            </tr>
-                            
-                            
-                            <tr class="message-cell">
-                                
+                                <td>3.144658923</td>
                                 <td>
-                                    ✅      user_test::user_tests::contract_consumer
-                                    <span class="error-message">
-                                        <pre></pre>
-                                    </span>
+                                    <a href=https://github.com/subhankar-nitt/contract-test-report/blob/main/user_test/consumer-producer.json download="contract.json">
+                                        <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/download-icon-10008164-8108583.png?f=webp&w=256" alt="Download">
+                                    </a>
                                 </td>
-                                <td class ="status">Passed</td>
-                                <td>
-                                    
-                                    
-                                </td>
-                                <td>0.575486031</td>
                                 
                             </tr>
                             

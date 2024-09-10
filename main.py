@@ -73,7 +73,8 @@ def generate_html_report(xml_floder,output_file="report.html"):
             'errors':errors,
             'skipped':skipped,
             'time':time,
-            'test_case': test_cases
+            'test_case': test_cases,
+            'report_dir':'https://github.com/subhankar-nitt/contract-test-report/blob/main/user_test/consumer-producer.json'
             })
     html_report = template.render(test_results=test_results,passed_tests=passed_tests,failed_tests=failed_tests,time_total=time_total)
     with open(output_file,'w') as f:

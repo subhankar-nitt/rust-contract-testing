@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-09-10T13:05:28" hostname="subhankar-modern14b5m" time="3.145286315"><testcase name="user_test" classname="user_test" time="3.144658923"><failure message="assertion failed">thread &apos;user_test&apos; panicked at tests/cloud_storage/mod.rs:12:60:
+called `Result::unwrap()` on an `Err` value: CredentialsIOError(Os { code: 2, kind: NotFound, message: &quot;No such file or directory&quot; })
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</failure></testcase>
+</testsuite>

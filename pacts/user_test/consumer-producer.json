@@ -1,0 +1,66 @@
+{
+  "consumer": {
+    "name": "consumer"
+  },
+  "interactions": [
+    {
+      "description": "Get User_test by ID",
+      "providerStates": [
+        {
+          "name": "Get User With ID 1"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/users/1"
+      },
+      "response": {
+        "body": {
+          "comment": "user added ",
+          "id": 1,
+          "user_name": "subhankar"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "Get User_test by ID",
+      "providerStates": [
+        {
+          "name": "Get User With ID 2"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/users/2"
+      },
+      "response": {
+        "body": {
+          "comment": "user added ",
+          "id": 2,
+          "user_name": "biswas"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "consumer": "1.3.1",
+      "mockserver": "2.0.2",
+      "models": "1.2.4"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "producer"
+  }
+}
