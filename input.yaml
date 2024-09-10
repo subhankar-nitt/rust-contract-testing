@@ -1,0 +1,96 @@
+openapi: '3.0.3'
+info:
+  title: user
+  version: '1.0'
+  x-consumer_name: 'consumer'
+  x-provider_name: 'producer'
+
+servers:
+  - url: https://rust-server-986655996669.us-central1.run.app
+paths:
+  /users/1:
+    get:
+      # parameters:
+      #   - in: header
+      #     name: Authorization
+      #     schema:
+      #       type: string
+      #     description: Authorization token
+
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: "application/json"
+
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_name:
+                    type: string
+                  comment:
+                    type: string
+                    
+              example:  
+                description: GET User With ID 1
+                value:
+                  id: 1,
+                  user_name: "subhankar"
+                  comment: "user added "
+
+  /users/2:
+    get:
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          description: Authorization needed
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_name:
+                    type: string
+                  comment:
+                    type: string
+
+
+              example:
+                  description: GET User With ID 2
+                  value:
+                    id: 2
+                    user_name: "biswas"
+                    comment: "user added " 
+
+
+
+
+
+# components:
+#   parameters:
+#     Authorization:
+#       in: header
+#       name: Authorization
+#       schema:
+#         type: string
+#       description: Authentication token using bearer token
+#       example: "your token"
+
+              
+
+
+
