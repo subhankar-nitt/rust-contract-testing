@@ -33,8 +33,7 @@ use std::sync::{ Mutex};
 use http::StatusCode;
 use lazy_static::lazy_static;
 
-use super::*;
-use crate::cloud_storage;
+
 struct Requests<'a>{
 
     method: &'a str,
@@ -126,8 +125,6 @@ lazy_static!{
         let json_data: serde_json::Value = from_str(&json_string)?;
         println!("{:?}",json_data);
 
-        let err = cloud_storage::uploadFile("pacts/users/consumer-producer.json".to_string()).await;
-        println!("{:?}",err);
         Ok(())
 
     }
