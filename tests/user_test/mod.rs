@@ -32,7 +32,6 @@ static PROVIDER_URL:&str ="https://rust-server-986655996669.us-central1.run.app"
 use std::sync::{ Mutex};
 use http::StatusCode;
 use lazy_static::lazy_static;
-use serial_test::serial;
 
 use super::*;
 use crate::cloud_storage;
