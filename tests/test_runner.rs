@@ -39,6 +39,7 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
             "body":{"id":2,"user_name":"biswas","comment":"user added "}
          }
          }"#,
+
     r#"{
         "provider_state":"GET User With ID 3",
         "request":{
@@ -49,6 +50,19 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
             {"statusCode":200,
             "headers":{"Content-Type":"application/json"},
             "body":{"id":3,"user_name":"ram","comment":"user added "}
+         }
+         }"#,
+
+    r#"{
+        "provider_state":"GET User With ID 4",
+        "request":{
+            "method":"Get",
+            "path":"/users/4"
+        },
+         "response":
+            {"statusCode":200,
+            "headers":{"Content-Type":"application/json"},
+            "body":{"id":4,"user_name":"John","comment":"user added "}
          }
          }"#
 
@@ -67,3 +81,4 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
 
     Ok(())
 }
+
