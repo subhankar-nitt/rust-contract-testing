@@ -40,7 +40,7 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
          }
          }"#,
 
-    r#"{
+     r#"{
         "provider_state":"GET User With ID 3",
         "request":{
             "method":"Get",
