@@ -36,11 +36,11 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
          "response":
             {"statusCode":200,
             "headers":{"Content-Type":"application/json"},
-            "body":{"id":2,"user_name":"biswas","comment":"user added "}
+            "body":{"id":2,"user_name":"subhankar","comment":"user added "}
          }
          }"#,
 
-     r#"{
+    r#"{
         "provider_state":"GET User With ID 3",
         "request":{
             "method":"Get",
@@ -49,11 +49,11 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
          "response":
             {"statusCode":200,
             "headers":{"Content-Type":"application/json"},
-            "body":{"id":3,"user_name":"ram","comment":"user added "}
+            "body":{"id":3,"user_name":"biswas","comment":"user added "}
          }
          }"#,
 
-     r#"{
+    r#"{
         "provider_state":"GET User With ID 4",
         "request":{
             "method":"Get",
@@ -62,7 +62,7 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
          "response":
             {"statusCode":200,
             "headers":{"Content-Type":"application/json"},
-            "body":{"id":4,"user_name":"John","comment":"user added "}
+            "body":{"id":4,"user_name":"ram","comment":"user added "}
          }
          }"#
 
