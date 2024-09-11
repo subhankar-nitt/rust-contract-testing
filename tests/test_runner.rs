@@ -39,7 +39,6 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
             "body":{"id":2,"user_name":"biswas","comment":"user added "}
          }
          }"#,
-
     r#"{
         "provider_state":"GET User With ID 3",
         "request":{
@@ -68,4 +67,3 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
 
     Ok(())
 }
-
