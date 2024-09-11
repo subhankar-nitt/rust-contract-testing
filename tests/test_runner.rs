@@ -1,6 +1,5 @@
 use std::fmt::format;
 
-
 mod user_test;
 mod cloud_storage;
 mod idtoken;
@@ -40,7 +39,7 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
          }
          }"#,
 
-        r#"{
+    r#"{
         "provider_state":"GET User With ID 3",
         "request":{
             "method":"Get",
@@ -68,3 +67,4 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
 
     Ok(())
 }
+
