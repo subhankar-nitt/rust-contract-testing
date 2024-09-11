@@ -31,8 +31,7 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
         "provider_state":"GET User With ID 2",
         "request":{
             "method":"Get",
-            "path":"/users/2",
-            "headers":{"Authorization":"Authorization needed"}
+            "path":"/users/2"
         },
          "response":
             {"statusCode":200,
@@ -41,11 +40,10 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
          }
          }"#,
     r#"{
-        "provider_state":"GET User With ID 2",
+        "provider_state":"GET User With ID 3",
         "request":{
             "method":"Get",
-            "path":"/users/3",
-            "headers":{"Authorization":"Authorization needed"}
+            "path":"/users/3"
         },
          "response":
             {"statusCode":200,
@@ -69,4 +67,3 @@ async fn user_test() -> Result<(),Box<dyn std::error::Error>>{
 
     Ok(())
 }
-
