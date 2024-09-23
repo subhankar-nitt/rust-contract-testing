@@ -1,9 +1,6 @@
 #! /bin/sh
 rm -rf report.json
-cargo build 
-cargo install junitify
-cargo test -- -Z unstable-options --report-time --format=json | junitify -i --out reports/
-# markdown-test-report -o index.md report.json
+cargo install markdown-test-report
+cargo test -- -Z unstable-options --report-time --format json >> report.json
 
-# cat index.md
-
+markdown-test-report -o index.md report.json

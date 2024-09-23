@@ -1,0 +1,45 @@
+# POST  https://rust-server-986655996669.us-central1.run.app/user/add
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImIyNjIwZDVlN2YxMzJiNTJhZmU4ODc1Y2RmMzc3NmMwNjQyNDlkMDQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAwNjAzNDMxODk0NjU3NjM1OTQ4IiwiaGQiOiJldGZvcmdlLmNvbSIsImVtYWlsIjoiaWx1ODMwNDU5QGV0Zm9yZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJjT1owUjJRaGtqOWtSS0RFVEgxMHRRIiwibmJmIjoxNzI2ODExMzgxLCJpYXQiOjE3MjY4MTE2ODEsImV4cCI6MTcyNjgxNTI4MSwianRpIjoiNDA4N2I4MGYxOWIxNjNhMzBkNGI0NTg5YWY5NjAxMDdkNjhhODcyNiJ9.URVNjkEzGKbfJiKEapOdVG1qtH9erVH6ZUJH5yvRDYNAUIu_v8kkw24DTkCMCYYOwn9WhZwsGpYDeQkgY-3dQN51BgQipFiBMNLoOWwO9RTPizlhj0BBpxHysD4RF5pEX-oYJxXfjOieMbIz5jHDhf81-eLOQFAtIZkXGnfUnUhYg_t3P4npGxwo4jqy3zbIbUMXXdkxxPoUwrAQY3yZQqbw1jaAOZkYyj-qypACcQf90nPSgntOQKXoPJCHZcEgWUwAlhvAJXO2pimKi76YBXN4X7whyJPfzTaq0QZv5uR8NGHg3oE6hgFii8CLOj_8yHMtKlSow2t7I-K9whn1Cw
+
+# {
+#     "user_name":"Alice"
+# }
+
+
+POST https://contract-strubs-986655996669.us-central1.run.app/generate/stubs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjVhYWZmNDdjMjFkMDZlMjY2Y2NlMzk1YjIxNDVjN2M2ZDQ3MzBlYTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAwNjAzNDMxODk0NjU3NjM1OTQ4IiwiaGQiOiJldGZvcmdlLmNvbSIsImVtYWlsIjoiaWx1ODMwNDU5QGV0Zm9yZ2UuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJ3TW9tT3gtYTJTcTJ1aXVnNnFQTkVnIiwibmJmIjoxNzI3MDE0MTM5LCJpYXQiOjE3MjcwMTQ0MzksImV4cCI6MTcyNzAxODAzOSwianRpIjoiZTIwMWMzODU5YWE0ZGI0YTg2YTQyMmI0ODMxMGQ5NDdjZTBhYzFiNyJ9.CVjIZJg_0N-XZexL8XwJ1z_kg_WaChuQ7uxC4p8b1BcsRpTeCF5KWh9URzX3q4bamGDslrIDPksnfZt2Rdd2ngnEDJkGS3d_hpxSOWqlhdpq4BN60TreAtyf-kpkHOu6_rUjRY7G_CWVbmFL0beyiK7Q6uMKtjI6j1sDoVVZEiD4mH_GSfUhcuLbsaOqqNrMiU2oA_mWGP9d01jWFw9jK4g8VbKevOHqmiA0ORGhxCEDv8tvRMuDHo_ZnSXvQu6wb22Y6w-O6qiyCsq1RGgTgebgvi0IhGYqhOd4HyDgSjMMITfrjH92Uhb8evYZTISAEObBsjaoMPCG1ekBPYRDBg
+
+{
+    "url":"https://rust-server-986655996669.us-central1.run.app",
+    "requests":[
+        {
+            "method":"GET",
+            "path":"/users/1"
+        },
+        {
+            "method":"GET",
+            "path":"/users/2"
+        },
+        {
+            "method":"GET",
+            "path":"/users/3"
+        },
+        {
+            "method":"GET",
+            "path":"/users/4"
+        },
+        {
+            "method":"Post",
+            "path":"/user/add",
+            "headers":{
+                "Content-Type":"application/json"
+            },
+            "body":{
+                "user_name":"subhankar"
+            }
+
+        }
+    ]
+}

@@ -26,7 +26,7 @@ excerpt_separator: <!--more-->
 | Name | Result | Duration |
 | ---- | ------ | -------- |
 | [contract_consumer](#contract_consumer) | ✅ | 0s | 
-| [contract_provider](#contract_provider) | ❌ | 0s | 
+| [contract_provider](#contract_provider) | ✅ | 0s | 
 
 
 # Details
@@ -35,22 +35,6 @@ excerpt_separator: <!--more-->
 
 **Duration**: 0s
 
-## ❌ contract_provider<a id="contract_provider"></a>
+## ✅ contract_provider<a id="contract_provider"></a>
 
 **Duration**: 0s
-
-<details>
-
-<summary>Test output</summary>
-
-<pre>
-thread &#x27;contract_provider&#x27; panicked at tests/idtoken/mod.rs:12:9:
-error   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: metadata
-
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-</pre>
-
-</details>
